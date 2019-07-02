@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2019 a las 21:46:57
+-- Tiempo de generación: 02-07-2019 a las 09:55:38
 -- Versión del servidor: 10.1.35-MariaDB
 -- Versión de PHP: 7.2.9
 
@@ -50,23 +50,10 @@ CREATE TABLE `consultas` (
   `precio_consulta` decimal(10,2) NOT NULL,
   `total` decimal(10,2) DEFAULT NULL,
   `fecha` date NOT NULL,
+  `metodo_pago` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `n_referencia` int(50) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `consultas`
---
-
-INSERT INTO `consultas` (`id_consulta`, `paciente_id`, `doctor_id`, `motivo`, `precio_consulta`, `total`, `fecha`, `status`) VALUES
-(3, 5, 2, 'PRUEBA', '2000.00', NULL, '2019-06-30', 0),
-(4, 2, 2, 'MOTIVO', '222.00', NULL, '2019-06-30', 0),
-(5, 5, 2, 'PRUEBA', '2000.00', NULL, '2019-06-30', 0),
-(6, 5, 2, 'PRUEBA', '2000.00', '4000.00', '2019-07-01', 0),
-(7, 5, 2, 'PRUEBA 2', '5000.00', '17000.00', '2019-07-01', 0),
-(8, 2, 2, 'NADA', '5000.00', '15000.00', '2019-07-01', 0),
-(9, 5, 2, 'NADA', '10000.00', '12000.00', '2019-07-01', 0),
-(10, 5, 2, 'NADA', '20000.00', '22000.00', '2019-07-01', 1),
-(11, 5, 2, 'DOLOR DE MUELA', '2000.00', '14000.00', '2019-07-01', 1);
 
 -- --------------------------------------------------------
 
@@ -80,21 +67,6 @@ CREATE TABLE `detalle_consulta` (
   `servicio_id` int(11) NOT NULL,
   `precio` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `detalle_consulta`
---
-
-INSERT INTO `detalle_consulta` (`id_detalle`, `consulta_id`, `servicio_id`, `precio`) VALUES
-(1, 5, 1, '2000.00'),
-(2, 6, 1, '2000.00'),
-(3, 7, 2, '10000.00'),
-(4, 7, 1, '2000.00'),
-(5, 8, 2, '10000.00'),
-(6, 9, 1, '2000.00'),
-(7, 10, 1, '2000.00'),
-(8, 11, 2, '10000.00'),
-(9, 11, 1, '2000.00');
 
 -- --------------------------------------------------------
 
@@ -113,14 +85,6 @@ CREATE TABLE `doctores` (
   `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `doctores`
---
-
-INSERT INTO `doctores` (`id_doctor`, `dni`, `nombres`, `apellidos`, `telefono`, `direccion`, `email`, `status`) VALUES
-(1, '20980232', 'LEONARDO', 'ONFIRE', '0432344234', '', '', 0),
-(2, '202022', 'DANIEL JOSE', 'ALVARADO MARTINEZ', '', '', '', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -138,17 +102,6 @@ CREATE TABLE `pacientes` (
   `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `pacientes`
---
-
-INSERT INTO `pacientes` (`id_paciente`, `dni`, `nombres`, `apellidos`, `telefono`, `direccion`, `email`, `status`) VALUES
-(1, 'V-249249379', 'LEONCIO ENRIQUE', 'REQUENA GONZALEZ', '04243109770', 'LA VICTORIA', 'LEONCIOREQUENA1995@GMAIL.COM', 0),
-(2, '20989357', 'OSWARD JOSE', 'REQUENA GONZALEZ', '', '', '', 1),
-(3, '20989357', 'LEONARDO PADILLA', 'PADILLA', '0203', '', '', 0),
-(4, '213213', 'SDASD', 'ASDA', '12323', '', 'SAD', 0),
-(5, '24924739', 'LEONCIO ENRIQUE', 'REQUENA', '', '', '', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -162,14 +115,6 @@ CREATE TABLE `servicios` (
   `descripcion` text COLLATE utf8_spanish_ci,
   `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `servicios`
---
-
-INSERT INTO `servicios` (`id_servicio`, `nombre_servicio`, `precio_servicio`, `descripcion`, `status`) VALUES
-(1, 'LIMPIEZA DENTAL', '2000.00', '', 1),
-(2, 'BRACKETS COMPLETOS ', '10000.00', '', 1);
 
 -- --------------------------------------------------------
 
@@ -259,31 +204,31 @@ ALTER TABLE `bitacora`
 -- AUTO_INCREMENT de la tabla `consultas`
 --
 ALTER TABLE `consultas`
-  MODIFY `id_consulta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_consulta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_consulta`
 --
 ALTER TABLE `detalle_consulta`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `doctores`
 --
 ALTER TABLE `doctores`
-  MODIFY `id_doctor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_doctor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

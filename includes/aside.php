@@ -6,7 +6,12 @@
         <div class="sidebar-brand-text mx-3">SMILE</div>
       </a>
       <hr class="sidebar-divider my-0">
-
+      
+      <li class="nav-item">
+        <a class="nav-link" href="home.php">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span>Inicio</span></a>
+      </li>
 
        <li class="nav-item">
         <a class="nav-link" href="doctores.php">
@@ -54,7 +59,6 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="usuarios.php">Usuarios</a>
-            <a class="collapse-item" href="bitacora.php">Bitacora</a>
             <a class="collapse-item" href="#">Respaldo y Restauración</a>
           </div>
         </div>

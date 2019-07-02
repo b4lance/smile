@@ -15,7 +15,7 @@
         <div class="container-fluid">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
-          <button class="btn btn-sm btn-primary" style="background: none;border: none;" data-toggle="modal" data-target="#ModalNuevo" title="Nuevo Personal">
+          <button class="btn btn-sm btn-primary" style="background: none;border: none;" data-toggle="modal" data-target="#ModalNuevo" title="Nuevo Usuario">
             <img src="<?php echo url; ?>assets/img/nuevo.png"  alt="" width="30px">
           </button>
           </div>

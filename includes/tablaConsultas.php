@@ -32,18 +32,22 @@ $pacientes=mysqli_query($con,"SELECT consultas.*,pacientes.nombres as nombre_pac
                                     <td width="20%"><?php echo $p["motivo"]; ?></td>
                                     <td width="15%"><?php echo $p["total"]; ?>Bs S.</td>
                                     <td><?php echo str_replace('-', '/', date('d-m-Y',strtotime($p['fecha']))); ?></td>
-                                    <td width="20%">
+                                    <td width="30%">
 
-                                         <button class="btn btn-sm" title="Ver Datos" style="background: none;border: none;margin-top: -10px;" onclick="ver('<?php echo $p['nombre_paciente'].' '.$p['apellido_paciente'] ?>','<?php echo $p['nombre_doctor'].' '.$p['apellido_doctor'] ?>','<?php echo $services ?>','<?php echo $p['total'] ?>','<?php echo $p['motivo'] ?>','<?php echo str_replace('-', '/', date('d-m-Y',strtotime($p['fecha']))); ?>')">
+                                         <button class="btn btn-sm" title="Ver Datos" style="background: none;border: none;margin-top: -10px;" onclick="ver('<?php echo $p['nombre_paciente'].' '.$p['apellido_paciente'] ?>','<?php echo $p['nombre_doctor'].' '.$p['apellido_doctor'] ?>','<?php echo $services ?>','<?php echo $p['total'] ?>','<?php echo $p['motivo'] ?>','<?php echo str_replace('-', '/', date('d-m-Y',strtotime($p['fecha']))); ?>','<?php echo $p['metodo_pago']; ?>','<?php echo $p['n_referencia'] ?>')">
                                             <img src="assets/img/ver.png" width="30px" alt="">
                                         </button>
 
-                                         <button class="btn btn-sm" title="Editar Datos" style="background: none;border: none;margin-top: -10px;" onclick="editar('<?php echo $p['id_consulta'] ?>','<?php echo $p['paciente_id'] ?>','<?php echo $p['doctor_id'] ?>','<?php echo $p['id_consulta']; ?>','<?php echo $p['precio_consulta'] ?>','<?php echo $p['motivo'] ?>','<?php echo str_replace('-', '/', date('d-m-Y',strtotime($p['fecha']))); ?>')">
+                                         <button class="btn btn-sm" title="Editar Datos" style="background: none;border: none;margin-top: -10px;" onclick="editar('<?php echo $p['id_consulta'] ?>','<?php echo $p['paciente_id'] ?>','<?php echo $p['doctor_id'] ?>','<?php echo $p['id_consulta']; ?>','<?php echo $p['precio_consulta'] ?>','<?php echo $p['motivo'] ?>','<?php echo str_replace('-', '/', date('d-m-Y',strtotime($p['fecha']))); ?>','<?php echo $p['metodo_pago']; ?>','<?php echo $p['n_referencia']; ?>')">
                                             <img src="assets/img/editar.png" width="30px" alt="">
                                         </button>
 
                                         <button class="btn btn-sm" title="Eliminar" onclick="eliminar('<?php echo $p['id_consulta'] ?>')" style="background: none;border: none;margin-top: -10px;">
                                             <img src="assets/img/eliminar.png" width="30px" alt="">
+                                        </button>
+
+                                        <button class="btn btn-sm" title="Imprimir Factura" onclick="imprimir('<?php echo $p['id_consulta'] ?>')" style="background: none;border: none;margin-top: -10px;">
+                                            <img src="assets/img/file.png" width="30px" alt="">
                                         </button>
                                     </td>         
                                 </tr>

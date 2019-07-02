@@ -19,7 +19,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
         <div class="container-fluid">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Consultas</h1>
-          <button class="btn btn-sm btn-primary" style="background: none;border: none;" data-toggle="modal" data-target="#ModalNuevo" title="Nuevo Personal">
+          <button class="btn btn-sm btn-primary" style="background: none;border: none;" data-toggle="modal" data-target="#ModalNuevo" title="Nuevo Consulta">
             <img src="<?php echo url; ?>assets/img/nuevo.png"  alt="" width="30px">
           </button>
           </div>
@@ -74,7 +74,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                       <div class="row">
 
                          <div class="form-group col-sm-12 col-md-6">
-                              <label for="doctor">Precio Consulta: <span class="text-danger">*</span></label>
+                              <label for="precio">Precio Consulta: <span class="text-danger">*</span></label>
                               <input type="text" id="precio" name="precio" class="form-control" onkeypress="return validar_numeros_puntos(event);" maxlength="15">
                           </div>
 
@@ -93,8 +93,28 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                               <label for="fecha">Fecha: <span class="text-danger">*</span></label>
                               <input type="date" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>">
                           </div>
+                          
+                        <div class="form-group col-sm-12 col-md-6">
+                          <label for="metodo_pago">Metodo de Pago: </label>
+                              <select name="metodo_pago" id="metodo_pago" class="form-control select2" style="width: 100%;height: 100%;" onchange="metodo();">
+                                  <option value="Efectivo">Efectivo</option>
+                                  <option value="Transferencia">Transferencia</option>
+                                  <option value="Deposito">Deposito</option>
+                                  <option value="Cheque">Cheque</option>
+                              </select>
+                          </div>
+                        
+                      </div>
 
-                        <div class="form-group col-md-6 col-sm-12">
+                      <div class="row" style="display: none;" id="div_referencia">
+                        <div class=" form-group col-sm-12">
+                            <label for="n_referencia">N° Referencia:</label>
+                              <input type="text" id="n_referencia" name="n_referencia" class="form-control" onkeypress="return validar_numeros_puntos(event);" maxlength="20">
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-sm-12">
                               <label for="motivo">Motivo: <span class="text-danger">*</span></label>
                               <textarea type="text" id="motivo" name="motivo" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
                           </div>
@@ -145,17 +165,39 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                           </div>
                       </div>
 
-                       <div class="row">  
+                      <div class="row">  
                         <div class="form-group col-sm-12 col-md-6">
                               <label for="fecha_edit">Fecha: <span class="text-danger">*</span></label>
                               <input type="text" id="fecha_edit" name="fecha" class="form-control">
-                          </div>
+                        </div>
+
                         <div class="form-group col-sm-12 col-md-6">
-                              <label for="motivo">Motivo: <span class="text-danger">*</span></label>
+                          <label for="metodo_pago_edit">Metodo de Pago: </label>
+                              <select name="metodo_pago" id="metodo_pago_edit" class="form-control select2" style="width: 100%;height: 100%;" onchange="metodo_edit();">
+                                  <option value="Efectivo">Efectivo</option>
+                                  <option value="Transferencia">Transferencia</option>
+                                  <option value="Deposito">Deposito</option>
+                                  <option value="Cheque">Cheque</option>
+                              </select>
+                          </div>
+                       
+                      </div>
+
+                      <div class="row" style="display: none;" id="div_referencia_edit">
+                        <div class=" form-group col-sm-12">
+                            <label for="n_referencia_edit">N° Referencia:</label>
+                              <input type="text" id="n_referencia_edit" name="n_referencia" class="form-control" onkeypress="return validar_numeros_puntos(event);" maxlength="20">
+                        </div>
+                      </div>
+
+                      <div class="row">
+                           <div class="form-group col-sm-12">
+                              <label for="motivo_edit">Motivo: <span class="text-danger">*</span></label>
                               <textarea type="text" id="motivo_edit" name="motivo" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
                               <input type="hidden" id="id_consulta" name="id">
                           </div>
                       </div>
+
                 </form>
               </div>
             <div class="modal-footer d-flex justify-content-center">
@@ -191,8 +233,17 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                             <strong>Servicio: </strong><span id="ver_servicio"></span>
                         </div>
 
+
                         <div class="col-sm-12 mt-3">
                             <strong>Precio: </strong><span id="ver_precio"></span> Bs S.
+                        </div>
+
+                         <div class="col-sm-12 mt-3">
+                            <strong>Metodo de Pago: </strong><span id="ver_metodo"></span>
+                        </div>
+
+                         <div class="col-sm-12 mt-3">
+                            <strong>N° de Referencia: </strong><span id="ver_referencia"></span>
                         </div>
 
                          <div class="col-sm-12 mt-3">
@@ -255,17 +306,28 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
         var precio=$('#precio').val();
         var motivo=$('#motivo').val();
         var fecha=$('#fecha').val();
+        var metodo_pago=$('#metodo_pago').val(); 
+        var n_referencia=$('#n_referencia').val(); 
+
 
         if(paciente === ''){
             swal('Error','El campo Paciente es requerido','error');
+            return false;
         }else if(doctor === ''){
             swal('Error','El campo Doctor es requerido','error');
+            return false;
         }else if(precio === ''){
             swal('Error','El campo Precio es requerido','error');
+            return false;
         }else if(fecha === ''){
           swal('Error','El campo Fecha es requerido','error');
+          return false;
+        }else if(metodo_pago === ''){
+          swal('Error','El campo Metodo de Pago es requerido','error');
+          return false;
         }else if(motivo === ''){
             swal('Error','El campo Motivo es requerido','error');
+            return false;
         }else{
 
         $.ajax({
@@ -277,6 +339,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
               $('#ModalNuevo').modal('hide');
               cargar_tabla();
               $('#form_nuevo')[0].reset();
+              $('#div_referencia').css('display','none');
           }
         });
 
@@ -284,7 +347,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
 
     }
 
-    function editar(id,paciente,doctor,servicio,precio,motivo,fecha){
+    function editar(id,paciente,doctor,servicio,precio,motivo,fecha,metodo,referencia){
         $('#id_consulta').val(id);
         $('#paciente_edit').val(paciente);
         $('#doctor_edit').val(doctor);
@@ -292,16 +355,23 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
         $('#precio_edit').val(precio);
         $('#motivo_edit').val(motivo);
         $('#fecha_edit').val(fecha);
+        $('#metodo_pago_edit').val(metodo);
+        if(metodo === 'Transferencia' || metodo === 'Deposito' || metodo === 'Cheque'){
+            $('#div_referencia_edit').css('display','block');
+            $('#n_referencia_edit').val(referencia);
+        }
         $('#cargar_pacientes').load('process/cargar_pacientes.php',{id:paciente});
         $('#cargar_doctores').load('process/cargar_doctores.php',{id:doctor});
         $('#cargar_servicios').load('process/cargar_servicios.php',{id:servicio});
         $('#ModalEditar').modal('show');
     }
 
-     function ver(paciente,doctor,servicio,precio,motivo,fecha){
+     function ver(paciente,doctor,servicio,precio,motivo,fecha,metodo,referencia){
         $('#ver_paciente').html(paciente);
         $('#ver_doctor').html(doctor);
         $('#ver_servicio').html(servicio);
+        $('#ver_metodo').html(metodo);
+        $('#ver_referencia').html(referencia);
         $('#ver_precio').html(precio);
         $('#ver_motivo').html(motivo);
         $('#ver_fecha').html(fecha);
@@ -341,6 +411,29 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
 
         }
 
+    }
+    function imprimir(id){
+       window.open("includes/ticket.php?id="+id,"Factura","width=500, height=400")
+    }
+
+    function metodo(){
+      var metodo_pago=$('#metodo_pago').val();
+
+      if(metodo_pago === 'Transferencia' || metodo_pago === 'Deposito' || metodo_pago === 'Cheque'){
+          $('#div_referencia').css('display','block');
+      }else{
+         $('#div_referencia').css('display','none');
+      }
+    }
+
+     function metodo_edit(){
+      var metodo_pago=$('#metodo_pago_edit').val();
+
+      if(metodo_pago === 'Transferencia' || metodo_pago === 'Deposito' || metodo_pago === 'Cheque'){
+          $('#div_referencia_edit').css('display','block');
+      }else{
+         $('#div_referencia_edit').css('display','none');
+      }
     }
   </script>
   <script src="<?php echo url; ?>assets/js/funciones.js"></script>
