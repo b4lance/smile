@@ -2,7 +2,7 @@
 require '../config/conexion.php';
 $id=$_GET['id'];
 $sql=mysqli_query($con,"SELECT consultas.*,pacientes.nombres as nombre_paciente,pacientes.apellidos as apellido_paciente,pacientes.direccion as direccion_paciente,doctores.nombres as nombre_doctor,doctores.apellidos as apellido_doctor FROM consultas INNER JOIN pacientes ON consultas.paciente_id=pacientes.id_paciente INNER JOIN doctores ON consultas.doctor_id=doctores.id_doctor WHERE consultas.id_consulta='$id'");
-$sql2=mysqli_query($con,"SELECT * FROM detalle_consulta INNER JOIN servicios ON detalle_consulta.servicio_id=servicios.id_servicio WHERE detalle_consulta.consulta_id='$id'");
+//$sql2=mysqli_query($con,"SELECT * FROM detalle_consulta INNER JOIN servicios ON detalle_consulta.servicio_id=servicios.id_servicio WHERE detalle_consulta.consulta_id='$id'");
 
 $c=mysqli_fetch_assoc($sql);
 $iva=($c['total']*16)/100;
@@ -20,7 +20,7 @@ $total=number_format($iva,2,'.','')+$c['total'];
 		}
 		#header{
 			margin-left: 30px;
-  			margin-top: 140px;
+  		margin-top: 140px;
 		}
 		#total{
 			margin-top: 60px;
@@ -43,7 +43,7 @@ $total=number_format($iva,2,'.','')+$c['total'];
 			width: 264.56px;
 			height: 566.92px;
 			max-width: 264.56px;
-			border:1px solid rgba(0,0,0,0.6);
+			/*border:1px solid rgba(0,0,0,0.6);*/
 		}
 	</style>
 </head>
@@ -69,13 +69,13 @@ $total=number_format($iva,2,'.','')+$c['total'];
           <td class="cantidad"><?php echo substr('CONSULTA',0,15); ?></td>
           <td class="precio" width="30%" align="center"><?php echo number_format($c['precio_consulta'],2,'.','') ?></td>
         </tr>
-      <?php while($row=mysqli_fetch_array($sql2)){ ?>
-        <tr>
+      
+        <!--<tr>
            <td>1.00</td>
-          <td class="cantidad"><?php echo substr($row['nombre_servicio'],0,15); ?></td>
-          <td class="precio" width="30%" align="center"><?php echo number_format($row['precio'],2,'.','') ?></td>
-        </tr>
-        <?php } ?>
+          <td class="cantidad"></td>
+          <td class="precio" width="30%" align="center"></td>
+        </tr>-->
+       
       </tbody>
     </table>
     <table id="total">

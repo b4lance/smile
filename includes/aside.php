@@ -19,11 +19,11 @@
           <span>Doctores</span></a>
       </li>
 
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link" href="servicios.php">
           <i class="fa fa-universal-access" aria-hidden="true"></i>
           <span>Servicios</span></a>
-      </li>
+      </li>-->
 
       <li class="nav-item">
         <a class="nav-link" href="pacientes.php">
@@ -35,6 +35,13 @@
         <a class="nav-link" href="consultas.php">
           <i class="fa fa-address-book" aria-hidden="true"></i>
           <span>Consultas</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="control_diario.php">
+          <i class="fa fa-cube" aria-hidden="true"></i>
+
+          <span>Pagos Diario</span></a>
       </li>
 
        <li class="nav-item">

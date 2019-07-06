@@ -6,9 +6,11 @@ $precio=$_POST['precio'];
 $fecha=$_POST['fecha'];
 $metodo=$_POST['metodo_pago'];
 $motivo=$_POST['motivo'];
+$servicios=$_POST['servicios'];
 
 
-  $guardar=mysqli_query($con,"INSERT INTO consultas(paciente_id,doctor_id,motivo,precio_consulta,total,fecha,metodo_pago) VALUES ('$paciente','$doctor','$motivo','$precio','$precio','$fecha','$metodo')");
+
+  $guardar=mysqli_query($con,"INSERT INTO consultas(paciente_id,doctor_id,motivo,servicios,precio_consulta,total,fecha,metodo_pago) VALUES ('$paciente','$doctor','$motivo','$servicios','$precio','$precio','$fecha','$metodo')");
 
 $id_consulta=mysqli_insert_id($con);
 $search_c=mysqli_query($con,"SELECT * FROM consultas where id_consulta='$id_consulta'");
@@ -24,7 +26,7 @@ if($metodo == 'Transferencia' || $metodo == 'Deposito' || $metodo == 'Cheque'){
 
 $total=0;
 
-if(isset($_POST['servicio'])){
+/*if(isset($_POST['servicio'])){
 $servicio=$_POST['servicio'];
 if(count($servicio) > 0){
 for($i=0;$i < count($servicio) ;$i++){
@@ -38,7 +40,7 @@ $total_final=$total+$precio_consulta;
 $update_consulta=mysqli_query($con,"UPDATE consultas SET total='$total_final' WHERE id_consulta='$id_consulta'");
 
 }
-}
+}*/
 
 
 if($guardar){

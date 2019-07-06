@@ -50,7 +50,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
               <div class="modal-body">
                   <form action="#" id="form_nuevo">
                       <div class="row">
-                          <div class="form-group col-sm-12 col-md-6">
+                          <div class="form-group col-sm-12 col-md-4">
                               <label for="paciente">Paciente: <span class="text-danger">*</span></label>
                               <select name="paciente" id="paciente" class="form-control select2" style="width: 100%;height: 100%;">
                                   <option value="">Seleccione</option>
@@ -60,7 +60,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                               </select>
                           </div>
 
-                          <div class="form-group col-sm-12 col-md-6">
+                          <div class="form-group col-sm-12 col-md-4">
                               <label for="doctor">Doctor: <span class="text-danger">*</span></label>
                               <select name="doctor" id="doctor" class="form-control select2" style="width: 100%;height: 100%;">
                                   <option value="">Seleccione</option>
@@ -69,33 +69,37 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                                   <?php } ?>
                               </select>
                           </div>
-                      </div>
 
-                      <div class="row">
-
-                         <div class="form-group col-sm-12 col-md-6">
-                              <label for="precio">Precio Consulta: <span class="text-danger">*</span></label>
-                              <input type="text" id="precio" name="precio" class="form-control" onkeypress="return validar_numeros_puntos(event);" maxlength="15">
-                          </div>
-
-                          <div class="form-group col-sm-12 col-md-6">
-                              <label for="servicio">Servicios: </label>
-                              <select name="servicio[]" id="servicio" class="form-control select2" style="width: 100%;height: 100%;" multiple="multiple">
-                                  <?php while($s=mysqli_fetch_array($servicios)){ ?>
-                                        <option value="<?php echo $s['id_servicio']?>"><?php echo $s['nombre_servicio']?></option>
-                                  <?php } ?>
-                              </select>
-                          </div>
-                      </div>
-
-                       <div class="row">  
-                         <div class="form-group col-sm-12 col-md-6">
+                           <div class="form-group col-sm-12 col-md-4">
                               <label for="fecha">Fecha: <span class="text-danger">*</span></label>
                               <input type="date" id="fecha" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>">
                           </div>
-                          
+                      </div>
+
+                      <div class="row">
+                    
+                          <div class="form-group col-md-6 col-sm-12">
+                              <label for="servicio">Servicios: <span class="text-danger">*</span></label>
+                              <textarea type="text" id="servicios" name="servicios" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
+                          </div>
+
+                          <div class="form-group col-sm-12 col-md-6">
+                              <label for="motivo">Motivo: <span class="text-danger">*</span></label>
+                              <textarea type="text" id="motivo" name="motivo" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
+                          </div>
+
+                      </div>
+
+                       <div class="row">  
+
+                         <div class="form-group col-sm-12 col-md-6">
+                              <label for="precio">Precio: <span class="text-danger">*</span></label>
+                              <input type="text" id="precio" name="precio" class="form-control" onkeypress="return validar_numeros_puntos(event);" maxlength="15">
+                          </div>
+                        
+
                         <div class="form-group col-sm-12 col-md-6">
-                          <label for="metodo_pago">Metodo de Pago: </label>
+                          <label for="metodo_pago">Metodo de Pago: <span class="text-danger">*</span></label>
                               <select name="metodo_pago" id="metodo_pago" class="form-control select2" style="width: 100%;height: 100%;" onchange="metodo();">
                                   <option value="Efectivo">Efectivo</option>
                                   <option value="Transferencia">Transferencia</option>
@@ -113,12 +117,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                         </div>
                       </div>
 
-                      <div class="row">
-                        <div class="form-group col-sm-12">
-                              <label for="motivo">Motivo: <span class="text-danger">*</span></label>
-                              <textarea type="text" id="motivo" name="motivo" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
-                          </div>
-                      </div>
+
                   </form>
               </div>
             <div class="modal-footer d-flex justify-content-center">
@@ -144,34 +143,43 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
               <div class="modal-body">
                 <form action="#" id="form_update">
                       <div class="row">
-                          <div class="form-group col-sm-12 col-md-6" id="cargar_pacientes">
+                          <div class="form-group col-sm-12 col-md-4" id="cargar_pacientes">
                               
                           </div>
 
-                          <div class="form-group col-sm-12 col-md-6" id="cargar_doctores">
+                          <div class="form-group col-sm-12 col-md-4" id="cargar_doctores">
                               
+                          </div>
+
+                           <div class="form-group col-sm-12 col-md-4">
+                              <label for="fecha_edit">Fecha: <span class="text-danger">*</span></label>
+                              <input type="text" id="fecha_edit" name="fecha" class="form-control">
+                        </div>
+
+                      </div>
+
+                       <div class="row">
+
+                         <div class="form-group col-sm-12">
+                              <label for="servicios_edit">Servicios: <span class="text-danger">*</span></label>
+                              <textarea type="text" id="servicios_edit" name="servicios" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
+                          </div>
+
+                           <div class="form-group col-sm-12">
+                              <label for="motivo_edit">Motivo: <span class="text-danger">*</span></label>
+                              <textarea type="text" id="motivo_edit" name="motivo" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
+                              <input type="hidden" id="id_consulta" name="id">
                           </div>
                       </div>
 
                       <div class="row">
                       
                           <div class="form-group col-sm-12 col-md-6">
-                              <label for="doctor">Precio: <span class="text-danger">*</span></label>
+                              <label for="precio_edit">Precio: <span class="text-danger">*</span></label>
                               <input type="text" id="precio_edit" name="precio" class="form-control" onkeypress="return validar_numeros_puntos(event);" maxlength="15">
                           </div>
 
-                          <div class="form-group col-sm-12 col-md-6" id="cargar_servicios">
-                              
-                          </div>
-                      </div>
-
-                      <div class="row">  
-                        <div class="form-group col-sm-12 col-md-6">
-                              <label for="fecha_edit">Fecha: <span class="text-danger">*</span></label>
-                              <input type="text" id="fecha_edit" name="fecha" class="form-control">
-                        </div>
-
-                        <div class="form-group col-sm-12 col-md-6">
+                           <div class="form-group col-sm-12 col-md-6">
                           <label for="metodo_pago_edit">Metodo de Pago: </label>
                               <select name="metodo_pago" id="metodo_pago_edit" class="form-control select2" style="width: 100%;height: 100%;" onchange="metodo_edit();">
                                   <option value="Efectivo">Efectivo</option>
@@ -180,7 +188,6 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                                   <option value="Cheque">Cheque</option>
                               </select>
                           </div>
-                       
                       </div>
 
                       <div class="row" style="display: none;" id="div_referencia_edit">
@@ -188,14 +195,6 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                             <label for="n_referencia_edit">N° Referencia:</label>
                               <input type="text" id="n_referencia_edit" name="n_referencia" class="form-control" onkeypress="return validar_numeros_puntos(event);" maxlength="20">
                         </div>
-                      </div>
-
-                      <div class="row">
-                           <div class="form-group col-sm-12">
-                              <label for="motivo_edit">Motivo: <span class="text-danger">*</span></label>
-                              <textarea type="text" id="motivo_edit" name="motivo" class="form-control" cols="30" rows="3" onkeyup="mayus(this);" onkeypress="return validar_string_direccion(event);"></textarea>
-                              <input type="hidden" id="id_consulta" name="id">
-                          </div>
                       </div>
 
                 </form>
@@ -214,7 +213,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                  <h5 class="modal-title" id="exampleModalLabel">Ver Datos de la Consulta <span class="fa fa-eye"></span></h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Ver Detalles de la Consulta <span class="fa fa-eye"></span></h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -230,7 +229,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
                         </div>
 
                         <div class="col-sm-12 mt-3">
-                            <strong>Servicio: </strong><span id="ver_servicio"></span>
+                            <strong>Servicios: </strong><span id="ver_servicio"></span>
                         </div>
 
 
@@ -349,11 +348,10 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
 
     function editar(id,paciente,doctor,servicio,precio,motivo,fecha,metodo,referencia){
         $('#id_consulta').val(id);
-        $('#paciente_edit').val(paciente);
-        $('#doctor_edit').val(doctor);
         //$('#servicio_edit').val(servicio);
         $('#precio_edit').val(precio);
         $('#motivo_edit').val(motivo);
+        $('#servicios_edit').val(servicio);
         $('#fecha_edit').val(fecha);
         $('#metodo_pago_edit').val(metodo);
         if(metodo === 'Transferencia' || metodo === 'Deposito' || metodo === 'Cheque'){
@@ -362,7 +360,7 @@ $servicios=mysqli_query($con,"SELECT * FROM servicios WHERE status=1 ORDER BY no
         }
         $('#cargar_pacientes').load('process/cargar_pacientes.php',{id:paciente});
         $('#cargar_doctores').load('process/cargar_doctores.php',{id:doctor});
-        $('#cargar_servicios').load('process/cargar_servicios.php',{id:servicio});
+        //$('#cargar_servicios').load('process/cargar_servicios.php',{id:servicio});
         $('#ModalEditar').modal('show');
     }
 
